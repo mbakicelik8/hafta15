@@ -1,0 +1,37 @@
+USE [bawary_sut]
+GO
+/****** Object:  StoredProcedure [dbo].[hizala]    Script Date: 3.01.2026 11:14:17 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[hizala]
+as 
+begin
+
+select verilen_urun.musteri_kodu,sum(urun_tutar)as uruntutar,sum(verilen_para)as verilenpara
+from para
+inner join verilen_urun 
+on verilen_urun.musteri_kodu=para.musteri_kodu
+
+group by verilen_urun.musteri_kodu
+order by sum(verilen_para) desc
+end
+
+---------------------------------------------------------------------------------------------
+create procedure hizala2
+(@musteri_kodu int)
+as 
+
+begin
+
+select verilen_urun.musteri_kodu,sum(urun_tutar)as uruntutar,sum(verilen_para)as verilenpara
+from para
+inner join verilen_urun 
+on verilen_urun.musteri_kodu=para.musteri_kodu
+where verilen_urun.musteri_kodu=@musteri_kodu
+group by verilen_urun.musteri_kodu
+order by sum(verilen_para) desc
+end
+
+Mehmet Baki Çelik B2481.010040
